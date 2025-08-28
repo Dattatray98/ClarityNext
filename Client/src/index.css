@@ -1,0 +1,45 @@
+ @keyframes float {
+
+   0%,
+   100% {
+     transform: translate(0, 0);
+   }
+
+   25% {
+     transform: translate(10px, -15px);
+   }
+
+   50% {
+     transform: translate(-5px, 10px);
+   }
+
+   75% {
+     transform: translate(-15px, -5px);
+   }
+ }
+
+ .animate-float-1 {
+   animation: float 15s ease-in-out infinite;
+ }
+
+ .animate-float-2 {
+   animation: float 20s ease-in-out infinite;
+ }
+
+ .animate-float-3 {
+   animation: float 25s ease-in-out infinite;
+ }
+
+ .animate-float-4 {
+   animation: float 18s ease-in-out infinite reverse;
+ }
+
+ .animate-float-5 {
+   animation: float 22s ease-in-out infinite reverse;
+ }
+
+ .animate-float-6 {
+   animation: float 17s ease-in-out infinite alternate;
+ }
+
+ @import "tailwindcss"
