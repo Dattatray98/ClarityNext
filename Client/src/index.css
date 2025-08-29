@@ -42,4 +42,44 @@
    animation: float 17s ease-in-out infinite alternate;
  }
 
+ /* CSS for scroll bar costumization */
+ ::-webkit-scrollbar {
+   width: 8px;
+   /* slim width */
+ }
+
+ ::-webkit-scrollbar-track {
+   background: #1f1f1f;
+   /* dark track */
+   border-radius: 4px;
+ }
+
+ ::-webkit-scrollbar-thumb {
+   background: linear-gradient(180deg, #5c5c5c, #ffffff);
+   /* gradient thumb */
+   border-radius: 4px;
+ }
+
+ ::-webkit-scrollbar-thumb:hover {
+   background: linear-gradient(180deg, #d3d3d6, #5c5c5c);
+   /* hover gradient */
+ }
+
+
+ /* CSS for hiding a specific scroll-bar */
+
+ /* Only hides scrollbar for elements with .scrollbar-hidden */
+ .scrollbar-hidden::-webkit-scrollbar {
+   display: none;
+   /* Chrome, Safari, Opera */
+ }
+
+ .scrollbar-hidden {
+   -ms-overflow-style: none;
+   /* Internet Explorer, Edge */
+   scrollbar-width: none;
+   /* Firefox */
+ }
+
+
  @import "tailwindcss"

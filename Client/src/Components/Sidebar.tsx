@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ tabs, activeTab, setActiveTab }) => {
   };
 
   return (
-    <div className="border w-[22%] h-full rounded-xl px-6 py-10">
+    <div className="border w-[22%] border-gray-200 shadow-md h-full rounded-xl px-6 py-10">
       {tabs.map((tab, index) => (
         <div key={index}
           onClick={() => handleTabClick(index)}
