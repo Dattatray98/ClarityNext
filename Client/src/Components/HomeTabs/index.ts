@@ -1,2 +1,2 @@
-export { default as Home } from "./Trainding";
-export { default as Upload } from "./Upload";
+export { default as Home } from "./Home";
+export { default as Upload } from "./ResumeBuilder";

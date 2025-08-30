@@ -48,17 +48,17 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <>
-            <Link to="/auth/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
+          <div className='flex items-center gap-5'>
+            <Link to="/auth/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-6 font-medium bg-black text-white rounded-xl ">
               Login
             </Link>
             <Link
               to="/auth/signup"
-              className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4"
+              className="border cursor-pointer border-gray-300 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl"
             >
               Signup
             </Link>
-          </>
+          </div>
         )}
       </div>
 
@@ -107,7 +107,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
+                <Link to="/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-black rounded-xl mt-4">
                   Login
                 </Link>
                 <Link
