@@ -12,10 +12,10 @@ interface User {
 
 
 interface SignupData {
-  firstName: string;
-  lastName: string;
+  FirstName: string;
+  LastName: string;
   email: string;
-  mobile: string;
+  phone: string;
   password: string;
 }
 
@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setToken(token);
 
       const api = import.meta.env.VITE_API_URL;
-      const response = await axios.get(`${api}/users/me`, {
+      const response = await axios.get(`${api}/api/auth/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -89,7 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     try {
       const api = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${api}/users/login`, { email, password });
+      const response = await axios.post(`${api}/api/auth/login`, { email, password });
       await handleToken(response.data.token);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
@@ -104,7 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
     try {
       const api = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${api}/users/signup`, userData);
+      const response = await axios.post(`${api}/api/auth/signup`, userData);
       await handleToken(response.data.token);
     } catch (err: any) {
       setError(err.response?.data?.message || 'Signup failed');
@@ -116,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const googleLogin = () => {
     const api = import.meta.env.VITE_API_URL;
-    window.location.href = `${api}/auth/google`;
+    window.location.href = `${api}/api/auth/google`;
   };
 
   const logout = () => {

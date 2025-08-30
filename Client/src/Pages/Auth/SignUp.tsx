@@ -6,10 +6,10 @@ import { useAuth } from "../../context/AuthContext.tsx";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    FirstName: "",
+    LastName: "",
     email: "",
-    mobile: "",
+    phone: "",
     password: "",
     confirmPassword: ""
   });
@@ -32,10 +32,10 @@ const SignUp = () => {
 
     try {
       await signup({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        FirstName: formData.FirstName,
+        LastName: formData.LastName,
         email: formData.email,
-        mobile: formData.mobile,
+        phone: formData.phone,
         password: formData.password
       });
     } catch (err) {
@@ -62,14 +62,14 @@ const SignUp = () => {
       {/* Name Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="firstName" className="block text-gray-300 text-sm mb-2">
+          <label htmlFor="FirstName" className="block text-gray-300 text-sm mb-2">
             First Name
           </label>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
+            id="FirstName"
+            name="FirstName"
+            value={formData.FirstName}
             onChange={handleChange}
             className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
             required
@@ -77,14 +77,14 @@ const SignUp = () => {
           />
         </div>
         <div>
-          <label htmlFor="lastName" className="block text-gray-300 text-sm mb-2">
+          <label htmlFor="LastName" className="block text-gray-300 text-sm mb-2">
             Last Name
           </label>
           <input
             type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
+            id="LastName"
+            name="LastName"
+            value={formData.LastName}
             onChange={handleChange}
             className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
             required
@@ -112,14 +112,14 @@ const SignUp = () => {
 
       {/* Mobile */}
       <div>
-        <label htmlFor="mobile" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="phone" className="block text-gray-300 text-sm mb-2">
           Mobile Number
         </label>
         <input
           type="tel"
-          id="mobile"
-          name="mobile"
-          value={formData.mobile}
+          id="phone"
+          name="phone"
+          value={formData.phone}
           onChange={handleChange}
           className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
           pattern="[0-9]{10}"

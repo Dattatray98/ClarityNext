@@ -5,6 +5,7 @@ import BlogPage from "./Pages/BlogPage"
 import Auth from "./Pages/Auth/Auth"
 import { AuthProvider } from "./context/AuthContext"
 import AIChatPage from "./Pages/AIChatPage"
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 
 const App = () => {
@@ -12,15 +13,20 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Routes>
+          {/* Landing page route */}
           <Route path="/" element={<Landing />} />
-          <Route path="/auth/:type" element={<Auth />} />
-          <Route path="/blogpage" element={<BlogPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path='/chatwithai' element={<AIChatPage />} />
 
-          {/* <Route element={<ProtectedRoute />}>
+          {/* Authentication route */}
+          <Route path="/auth/:type" element={<Auth />} />
+
+          {/* Protected routes, can be accessed only logged in users*/}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/blogpage" element={<BlogPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path='/chatwithai' element={<AIChatPage />} />
+
           </Route>
-           */}
+
         </Routes>
       </Router>
     </AuthProvider>

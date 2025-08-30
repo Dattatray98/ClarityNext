@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { NavLinks } from "../Types/types";
 import { FaGraduationCap, FaBars, FaTimes } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <nav className="border-b border-gray-300 h-15 flex items-center p-5 w-full justify-between bg-blue-50">
@@ -34,11 +35,31 @@ const Navbar = () => {
           );
         })}
 
-        <button
-          onClick={() => navigate('/auth/login')}
-          className="border cursor-pointer border-gray-400 shadow-md py-1.5 px-3 lg:py-2 lg:px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl hover:shadow-lg transition-shadow">
-          Login/SignUp
-        </button>
+        {user ? (
+          <>
+            <Link to="/profile" className="mr-4">
+              Profile
+            </Link>
+            <button
+              onClick={logout}
+              className="bg-red-500 px-3 py-1 rounded"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/auth/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
+              Login
+            </Link>
+            <Link
+              to="/auth/signup"
+              className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4"
+            >
+              Signup
+            </Link>
+          </>
+        )}
       </div>
 
       {/* Mobile Menu Button */}
@@ -71,11 +92,33 @@ const Navbar = () => {
               );
             })}
 
-            <button
-              onClick={() => navigate("/login")}
-              className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
-              Login/SignUp
-            </button>
+
+            {user ? (
+              <>
+                <Link to="/profile" className="mr-4">
+                  Profile
+                </Link>
+                <button
+                  onClick={logout}
+                  className="bg-red-500 px-3 py-1 rounded"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4"
+                >
+                  Signup
+                </Link>
+              </>
+            )}
+
           </div>
         </div>
       )}

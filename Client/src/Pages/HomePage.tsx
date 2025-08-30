@@ -8,7 +8,6 @@ const HomePage = () => {
   // const { user } = useAuth(); // Example: if you have authentication context
   // const userName = user?.name || "User";
   
-  const fetch = async()=>{}
 
   return (
     <div className="bg-gray-100 ">
