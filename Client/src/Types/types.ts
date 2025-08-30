@@ -8,7 +8,7 @@ export const NavLinks: NavLinkItem[] =[
     { id: 1, icon: HiOutlineHome, label: "Home", path:"/home" },
     { id: 2, icon: TbInfoOctagon , label: "About" },
     { id: 3, icon: TbListDetails, label: "Features" },
-    { id: 4, icon: RiChatSmileAiLine, label: "Chat With Ai" },
+    { id: 4, icon: RiChatSmileAiLine, label: "Chat With Ai", path:'/chatwithai' },
 ] 
 
 export interface NavLinkItem {

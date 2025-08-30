@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { NavLinks } from "../Types/types";
 import { FaGraduationCap, FaBars, FaTimes } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="border-b border-gray-300 h-15 flex items-center p-5 w-full justify-between bg-blue-50">
@@ -20,8 +22,8 @@ const Navbar = () => {
         {NavLinks.map((navlink) => {
           const Icon = navlink.icon;
           return (
-            <div 
-              className="flex items-center gap-1 hover:text-[#029097] transition-colors" 
+            <div
+              className="flex items-center gap-1 hover:text-[#029097] transition-colors"
               key={navlink.id}
             >
               <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
@@ -31,14 +33,16 @@ const Navbar = () => {
             </div>
           );
         })}
-        
-        <button className="border cursor-pointer border-gray-400 shadow-md py-1.5 px-3 lg:py-2 lg:px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl hover:shadow-lg transition-shadow">
+
+        <button
+          onClick={() => navigate('/auth/login')}
+          className="border cursor-pointer border-gray-400 shadow-md py-1.5 px-3 lg:py-2 lg:px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl hover:shadow-lg transition-shadow">
           Login/SignUp
         </button>
       </div>
 
       {/* Mobile Menu Button */}
-      <button 
+      <button
         className="md:hidden text-[#013778] text-2xl"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         aria-label="Toggle menu"
@@ -53,11 +57,11 @@ const Navbar = () => {
             {NavLinks.map((navlink) => {
               const Icon = navlink.icon;
               return (
-                <div 
+                <div
                   className="flex items-center gap-3 py-2 hover:text-[#029097] transition-colors"
                   key={navlink.id}
                   onClick={() => setIsMenuOpen(false)}
-                  
+
                 >
                   <Icon className="w-5 h-5" />
                   <a className="font-medium text-lg cursor-pointer">
@@ -66,7 +70,10 @@ const Navbar = () => {
                 </div>
               );
             })}
-            <button className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
+
+            <button
+              onClick={() => navigate("/login")}
+              className="border cursor-pointer border-gray-400 shadow-md py-2 px-4 font-medium bg-gradient-to-tr from-blue-100 to-blue-300 rounded-xl mt-4">
               Login/SignUp
             </button>
           </div>
