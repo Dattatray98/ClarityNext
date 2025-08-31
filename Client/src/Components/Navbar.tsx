@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLinks } from "../Types/types";
-import { FaGraduationCap, FaBars, FaTimes } from "react-icons/fa";
+import { FaGraduationCap, FaBars, FaTimes, FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -36,17 +36,17 @@ const Navbar = () => {
         })}
 
         {user ? (
-          <>
-            <Link to="/profile" className="mr-4">
-              Profile
+          <div className='flex gap-5 items-center'>
+            <Link to="/profile" className="border rounded-full h-8 w-8 flex items-center justify-center ">
+            <FaUser className='h-5 w-5' />
             </Link>
             <button
               onClick={logout}
-              className="bg-red-500 px-3 py-1 rounded"
+              className="bg-red-300 px-3 py-1 rounded text-gray-800 font-medium hover:bg-red-600"
             >
               Logout
             </button>
-          </>
+          </div>
         ) : (
           <div className='flex items-center gap-5'>
             <Link to="/auth/login" className="border cursor-pointer border-gray-400 shadow-md py-2 px-6 font-medium bg-black text-white rounded-xl ">

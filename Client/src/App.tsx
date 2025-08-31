@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthContext"
 import AIChatPage from "./Pages/AIChatPage"
 import ProtectedRoute from "./Components/ProtectedRoute"
 import FeaturesPage from "./Pages/FeaturesPage"
+import ProfilePage from "./Pages/ProfilePage"
 
 
 const App = () => {
@@ -34,6 +35,9 @@ const App = () => {
 
             {/* Chat with ai route */}
             <Route path='/chatwithai' element={<AIChatPage />} />
+
+            {/* Profile Page route */}
+            <Route path="/profile"  element={<ProfilePage />} />
 
           </Route>
 

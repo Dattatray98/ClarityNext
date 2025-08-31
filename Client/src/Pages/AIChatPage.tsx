@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 // Define TypeScript interfaces
 interface Message {
@@ -13,6 +14,10 @@ interface Chat {
   title: string;
   messages: Message[];
   lastActive: Date;
+}
+
+interface ApiResponse {
+  response: string;
 }
 
 const AIChatPage: React.FC = () => {
@@ -36,6 +41,7 @@ const AIChatPage: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
   // Refs for auto-scrolling and focusing
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -44,8 +50,36 @@ const AIChatPage: React.FC = () => {
   // Get current chat
   const currentChat = chats.find(chat => chat.id === currentChatId) || chats[0];
 
+  // Function to call the backend API
+  const askBackendAI = async (prompt: string): Promise<string> => {
+    try {
+      const response = await axios.post<ApiResponse>(
+        'http://localhost:8000/api/ask',
+        { prompt },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 30000, // 30 second timeout
+        }
+      );
+
+      if (!response.data.response) {
+        throw new Error('No response received from AI');
+      }
+
+      return response.data.response;
+    } catch (error) {
+      console.error('API Error:', error);
+      if (axios.isAxiosError(error)) {
+        throw new Error(error.response?.data?.message || 'Failed to get response from AI');
+      }
+      throw new Error('An unexpected error occurred');
+    }
+  };
+
   // Function to handle sending a message
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputText.trim() === '') return;
     
     // Add user message
@@ -71,12 +105,15 @@ const AIChatPage: React.FC = () => {
     setChats(updatedChats);
     setInputText('');
     setIsTyping(true);
+    setError(null);
     
-    // Simulate AI response after a delay
-    setTimeout(() => {
+    try {
+      // Call the backend API
+      const aiResponseText = await askBackendAI(inputText);
+      
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: `I received your message: "${inputText}". This is a simulated response from the AI assistant. In a real application, this would be replaced with actual AI-generated content.`,
+        text: aiResponseText,
         sender: 'ai',
         timestamp: new Date(),
       };
@@ -87,14 +124,39 @@ const AIChatPage: React.FC = () => {
             ...chat,
             messages: [...chat.messages, aiResponse],
             lastActive: new Date(),
+            title: chat.title === 'New Chat' ? inputText.slice(0, 30) + (inputText.length > 30 ? '...' : '') : chat.title,
           };
         }
         return chat;
       });
       
       setChats(updatedChatsWithAI);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to get AI response';
+      setError(errorMessage);
+      
+      // Add error message to chat
+      const errorResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        text: `Sorry, I encountered an error: ${errorMessage}`,
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+      
+      const updatedChatsWithError = updatedChats.map(chat => {
+        if (chat.id === currentChatId) {
+          return {
+            ...chat,
+            messages: [...chat.messages, errorResponse],
+          };
+        }
+        return chat;
+      });
+      
+      setChats(updatedChatsWithError);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   // Function to create a new chat
@@ -118,6 +180,7 @@ const AIChatPage: React.FC = () => {
     setCurrentChatId(newChatId);
     setInputText('');
     setIsTyping(false);
+    setError(null);
   };
 
   // Function to select a chat
@@ -125,6 +188,7 @@ const AIChatPage: React.FC = () => {
     setCurrentChatId(chatId);
     setInputText('');
     setIsTyping(false);
+    setError(null);
   };
 
   // Function to delete a chat
@@ -253,6 +317,13 @@ const AIChatPage: React.FC = () => {
           <div className="w-6"></div> {/* Spacer for balance */}
         </header>
 
+        {/* Error message */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-4 mt-4">
+            <p>{error}</p>
+          </div>
+        )}
+
         {/* Messages Container */}
         <div className="flex-1 overflow-y-auto p-4 pb-20">
           <div className="max-w-3xl mx-auto">
@@ -315,7 +386,7 @@ const AIChatPage: React.FC = () => {
               />
               <button
                 onClick={handleSendMessage}
-                disabled={inputText.trim() === ''}
+                disabled={inputText.trim() === '' || isTyping}
                 className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
                 style={{ height: '44px', width: '44px' }}
               >

@@ -1,21 +1,10 @@
-POST http://localhost:8000/api/auth/signup
+POST http://localhost:6000/api/auth/signup
 Content-Type: application/json
 
 {
   "FirstName": "Dattu",
   "LastName": "joje",
-  "email": "dattu@exaemple.com",
-  "phone": 9823495758,
-  "password": "mypassword123"
-}
-
-
-### login test
-
-POST http://localhost:8000/api/auth/login
-Content-Type: application/json
-
-{
-  "identifier": "dattu@example.com",
+  "email": "dattu@exaeekpjle.com",
+  "phone": 9823495009,
   "password": "mypassword123"
 }

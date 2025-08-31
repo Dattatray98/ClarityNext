@@ -1,14 +1,14 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import bodyParser from "body-parser";
 import cors from "cors";
-import authRoutes from "./Routes/User"
-import { database } from "./config/mongoConfig";
+// import authRoute from "./Routes/userAuth.route"
+import aiRoute from "./Routes/ai.route"
+import { database } from "./config/mongo.config";
+
 dotenv.config();
 
 const app = express();
-const PORT = 8000;
-app.use(bodyParser.json());
+const PORT = 6000;
 
 database();
 
@@ -24,13 +24,16 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello from Express + TypeScript + CommonJS 🚀");
+  res.send("Hello from Express + TypeScript + CommonJS 🚀 by dattu");
 });
 
 
 // SignUP route 
-app.use("/api/auth", authRoutes);
-// app.use("/ai", AiRoute)
+// app.use("/api/auth", authRoute);
+
+
+// Ai Routes 
+app.use("/api", aiRoute)
 
 // Start server
 app.listen(PORT, () => {
