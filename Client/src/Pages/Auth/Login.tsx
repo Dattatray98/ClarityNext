@@ -45,10 +45,10 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 min-w-[40vh] max-w-md">
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="email" className="block text-gray-800 text-sm mb-2">
           Email Address
         </label>
         <input
@@ -56,7 +56,7 @@ const Login = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
+          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition"
           placeholder="student@example.com"
           required
           disabled={isLoading}
@@ -66,13 +66,13 @@ const Login = () => {
       {/* Password Field */}
       <div>
         <div className="flex justify-between items-center mb-2">
-          <label htmlFor="password" className="block text-gray-300 text-sm">
+          <label htmlFor="password" className="block text-gray-800 text-sm">
             Password
           </label>
           <button
             type="button"
             onClick={() => navigate("/forgot-password")}
-            className="text-xs text-indigo-400 hover:text-indigo-300"
+            className="text-xs text-indigo-700 hover:text-indigo-500"
           >
             Forgot Password?
           </button>
@@ -83,7 +83,7 @@ const Login = () => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition pr-12"
+            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition pr-12"
             placeholder="••••••••"
             required
             disabled={isLoading}
@@ -125,7 +125,7 @@ const Login = () => {
       {/* Divider */}
       <div className="flex items-center">
         <div className="flex-1 border-t border-gray-600"></div>
-        <span className="px-4 text-gray-400 text-sm">OR</span>
+        <span className="px-4 text-gray-800 text-sm">OR</span>
         <div className="flex-1 border-t border-gray-600"></div>
       </div>
 
@@ -141,11 +141,11 @@ const Login = () => {
       </button>
 
       {/* Sign Up Link */}
-      <p className="text-center text-gray-400 text-sm">
+      <p className="text-center text-gray-500 text-sm">
         Don't have an account?{" "}
         <a 
           href="/auth/signup" 
-          className="text-indigo-400 hover:text-indigo-300 font-medium"
+          className="text-indigo-700 hover:text-indigo-500 font-medium"
         >
           Sign up
         </a>

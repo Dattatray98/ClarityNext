@@ -1,15 +1,19 @@
 import { useState } from "react";
-import { Home, Upload } from "../Components/HomeTabs";
+import { AiChat, Home, StayUpdated, Upload } from "../Components/FeaturesTab";
 import Navbar from "../Components/Navbar"
 import Sidebar from "../Components/Sidebar"
-import { FaHome } from "react-icons/fa";
+import { BiHomeSmile } from "react-icons/bi"
+import { RiChatSmileAiLine } from "react-icons/ri"
+import { RxUpdate, RxFileText } from "react-icons/rx"
 
 const FeaturesPage = () => {
     const [activeTab, setActiveTab] = useState(0);
 
     const tabs = [
-        { label: "Home", icon: FaHome, content: <Home /> },
-        { label: "Upload", icon: FaHome, content: <Upload /> },
+        { label: "Home", icon: BiHomeSmile, content: <Home /> },
+        { label: "Resume", icon: RxFileText, content: <Upload /> },
+        { label: "AI Chat", icon: RiChatSmileAiLine, content: <AiChat /> },
+        { label: "Stay Updated", icon: RxUpdate, content: <StayUpdated />}
     ];
 
     const handleTabClick = (index: number) => {

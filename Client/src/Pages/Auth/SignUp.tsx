@@ -1,4 +1,3 @@
-// SignUp.tsx
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -19,16 +18,53 @@ const SignUp = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value.trimStart() })); // prevent accidental leading spaces
+  };
+
+  const validateInputs = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (!formData.FirstName || !formData.LastName) {
+      alert("Please enter your first and last name.");
+      return false;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+
+    if (!phoneRegex.test(formData.phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return false;
+    }
+
+    if (formData.password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    if (
+      !/[A-Z]/.test(formData.password) ||
+      !/[0-9]/.test(formData.password)
+    ) {
+      alert("Password must include at least one uppercase letter and one number.");
+      return false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match!");
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match!");
-      return;
-    }
+
+    if (!validateInputs()) return;
 
     try {
       await signup({
@@ -62,7 +98,7 @@ const SignUp = () => {
       {/* Name Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="FirstName" className="block text-gray-300 text-sm mb-2">
+          <label htmlFor="FirstName" className="block text-gray-800 text-sm mb-2">
             First Name
           </label>
           <input
@@ -71,13 +107,13 @@ const SignUp = () => {
             name="FirstName"
             value={formData.FirstName}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
+            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition"
             required
             disabled={loading}
           />
         </div>
         <div>
-          <label htmlFor="LastName" className="block text-gray-300 text-sm mb-2">
+          <label htmlFor="LastName" className="block text-gray-800 text-sm mb-2">
             Last Name
           </label>
           <input
@@ -86,7 +122,7 @@ const SignUp = () => {
             name="LastName"
             value={formData.LastName}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
+            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition"
             required
             disabled={loading}
           />
@@ -95,7 +131,7 @@ const SignUp = () => {
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="email" className="block text-gray-800 text-sm mb-2">
           Email Address
         </label>
         <input
@@ -104,7 +140,7 @@ const SignUp = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
+          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition"
           required
           disabled={loading}
         />
@@ -112,7 +148,7 @@ const SignUp = () => {
 
       {/* Mobile */}
       <div>
-        <label htmlFor="phone" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="phone" className="block text-gray-800 text-sm mb-2">
           Mobile Number
         </label>
         <input
@@ -121,7 +157,7 @@ const SignUp = () => {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
-          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition"
+          className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition"
           pattern="[0-9]{10}"
           required
           disabled={loading}
@@ -130,7 +166,7 @@ const SignUp = () => {
 
       {/* Password */}
       <div>
-        <label htmlFor="password" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="password" className="block text-gray-800 text-sm mb-2">
           Password
         </label>
         <div className="relative">
@@ -140,7 +176,7 @@ const SignUp = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition pr-12"
+            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition pr-12"
             required
             disabled={loading}
           />
@@ -157,7 +193,7 @@ const SignUp = () => {
 
       {/* Confirm Password */}
       <div>
-        <label htmlFor="confirmPassword" className="block text-gray-300 text-sm mb-2">
+        <label htmlFor="confirmPassword" className="block text-gray-800 text-sm mb-2">
           Confirm Password
         </label>
         <div className="relative">
@@ -167,7 +203,7 @@ const SignUp = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white placeholder-gray-400 transition pr-12"
+            className="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700 font-medium placeholder-gray-400 transition pr-12"
             required
             disabled={loading}
           />
@@ -208,7 +244,7 @@ const SignUp = () => {
       {/* Divider */}
       <div className="flex items-center">
         <div className="flex-1 border-t border-gray-600"></div>
-        <span className="px-4 text-gray-400 text-sm">OR</span>
+        <span className="px-4 text-gray-800 text-sm">OR</span>
         <div className="flex-1 border-t border-gray-600"></div>
       </div>
 
@@ -224,11 +260,11 @@ const SignUp = () => {
       </button>
 
       {/* Login Link */}
-      <p className="text-center text-gray-400 text-sm">
+      <p className="text-center text-gray-500 text-sm">
         Already have an account?{" "}
         <a 
           href="/auth/login" 
-          className="text-indigo-400 hover:text-indigo-300 font-medium"
+          className="text-indigo-700 hover:text-indigo-500 font-medium"
         >
           Log in
         </a>

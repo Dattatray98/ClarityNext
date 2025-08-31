@@ -1,7 +1,7 @@
 
 const Home = () => {
   return (
-    <div className="w-full h-full  bg-gradient-to-b from-[#e2f7f8] to-gray-50 ">
+    <div className="w-full h-full rounded-xl ">
       <section className="rounded-xl">
         <div className="p-10 min-h-[40vh] text-center rounded-xl items-center">
           <h1 className="text-3xl md:text-4xl mt-16 font-bold text-[#029097] drop-shadow-lg">
