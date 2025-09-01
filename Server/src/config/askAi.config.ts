@@ -12,7 +12,7 @@ export const askOllama = async (prompt: string): Promise<string>=>{
   try{
 
     const response = await axios.post(ollama_api, {
-      model: "llama3.1:8b",
+      model: process.env.AI_MODEL_NAME as string,
       prompt,
       max_tokens: 512,
       stream: false,

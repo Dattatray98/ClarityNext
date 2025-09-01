@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ChatMessage from '../Components/ChatMessage';
 import type { Chat, Message } from '../Types/types';
-
+import {Sparkles } from "lucide-react";
 import { askBackendAI } from '../Hooks/AiRoutes.Fetch';
+import { MdDelete } from 'react-icons/md';
+import { HiChevronDoubleRight } from "react-icons/hi";
 
 const AIChatPage: React.FC = () => {
   // State for chats, current chat, and user input
@@ -22,7 +24,7 @@ const AIChatPage: React.FC = () => {
     },
   ]);
 
-  
+
   const [currentChatId, setCurrentChatId] = useState('1');
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -196,16 +198,16 @@ const AIChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 p-3 bg-gradient-to-bl from-blue-100 to-gray-100">
       {/* Sidebar */}
       <div
-        className={`bg-gray-900 text-white w-64 flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-0' : '-ml-64'
+        className={`bg-gray-100 shadow-md border-2 border-gray-200 rounded-xl text-white w-[35vh] flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-0' : '-ml-64'
           } md:ml-0`}
       >
         <div className="p-4">
           <button
             onClick={handleNewChat}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex items-center justify-center"
+            className="w-full bg-gradient-to-tr from-[#029097] to-[#01479d] hover:bg-blue-300 border-2 text-white py-2 px-4 rounded-xl flex items-center justify-center"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
@@ -215,17 +217,17 @@ const AIChatPage: React.FC = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto">
-          <div className="px-3 py-2 text-xs text-gray-400 uppercase tracking-wider">Recent Chats</div>
-          <div className="space-y-1 px-2">
+          <div className="px-3 py-2 text-xs font-medium text-gray-600 uppercase tracking-wider">Recent Chats</div>
+          <div className="space-y-2 px-2">
             {chats.map(chat => (
               <div
                 key={chat.id}
                 onClick={() => handleSelectChat(chat.id)}
-                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${currentChatId === chat.id ? 'bg-gray-700' : 'hover:bg-gray-800'
+                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${currentChatId === chat.id ? 'bg-blue-50 shadow-sm border border-gray-200' : 'border border-gray-200 bg-gray-200 hover:bg-gray-100'
                   }`}
               >
                 <div className="truncate flex-1">
-                  <div className="font-medium text-sm truncate">{chat.title}</div>
+                  <div className="font-medium text-sm truncate text-gray-700">{chat.title}</div>
                   <div className="text-xs text-gray-400">
                     {chat.lastActive.toLocaleDateString()}
                   </div>
@@ -234,32 +236,30 @@ const AIChatPage: React.FC = () => {
                   onClick={(e) => handleDeleteChat(chat.id, e)}
                   className="text-gray-400 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
+                  <MdDelete className='w-6 h-6'/>
                 </button>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="p-4 border-t border-gray-800">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AI</span>
+        <div className="py-6 px-6 border-t-2 border-gray-200 bg-white rounded-b-xl">
+          <div className="space-x-6 ">
+            <div className='flex gap-1 items-center cursor-pointer'>
+              <Sparkles className="text-[#013778] h-5 w-5" />
+              <h1 className="text-xl md:text-xl font-bold bg-gradient-to-r from-[#013778] to-[#029097] bg-clip-text text-transparent">
+                Neo AI
+              </h1>
             </div>
-            <div className="text-sm">
-              <div className="font-medium">AI Assistant</div>
-              <div className="text-gray-400">Online</div>
-            </div>
+            <p className='text-gray-500 text-[11px] ml-6 font-medium mt-[-6px]'>From questions to clarity—instantly.</p>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden ">
+      <div className="flex-1 flex flex-col overflow-hidden border-2 border-gray-200 ml-1 rounded-xl">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+        <header className="bg-gray-50 border-b border-gray-200 p-4 flex items-center justify-between">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="text-gray-500 focus:outline-none md:hidden"
@@ -282,7 +282,7 @@ const AIChatPage: React.FC = () => {
         )}
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto p-4 pb-20">
+        <div className="flex-1 overflow-y-auto p-4 pb-20 bg-gray-100">
           <div className="max-w-4xl mx-auto">
             {currentChat.messages.map((message) => (
               <ChatMessage key={message.id} message={message} />
@@ -306,8 +306,8 @@ const AIChatPage: React.FC = () => {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white p-4 ">
-          <div className="max-w-4xl mx-auto">
+        <div className="bg-white p-2 border-t border-gray-200">
+          <div className="max-w-4xl mt-1 mx-auto">
             <div className="flex items-end">
               <textarea
                 ref={inputRef}
@@ -315,30 +315,17 @@ const AIChatPage: React.FC = () => {
                 onChange={handleTextareaChange}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message here..."
-                className="flex-1 border rounded-lg py-2 px-4 font-medium mr-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="flex-1 border-2 border-gray-200 rounded-lg py-2 px-4 font-medium mr-2 resize-none focus:outline-none focus:border-gray-400 focus:shadow-sm"
                 rows={1}
                 style={{ minHeight: '44px', maxHeight: '150px' }}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={inputText.trim() === '' || isTyping}
-                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                className="bg-blue-500 text-white rounded-lg p-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md hover:border-gray-300 hover:border justify-center flex items-center flex-shrink-0"
                 style={{ height: '44px', width: '44px' }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                  />
-                </svg>
+                <HiChevronDoubleRight className='h-6 w-6'/>
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2 text-center">
