@@ -1,10 +1,41 @@
-POST http://localhost:6000/api/auth/signup
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "dattu@exampl.com",
+  "password": "mypassword123"
+}
+
+
+### 
+POST http://localhost:8000/api/auth/signup
 Content-Type: application/json
 
 {
   "FirstName": "Dattu",
-  "LastName": "joje",
-  "email": "dattu@exaeekpjle.com",
-  "phone": 9823495009,
+  "LastName": "Joje",
+  "email": "dattu@exampl.com",
+  "phone": "9823495001",
   "password": "mypassword123"
+}
+
+
+
+### 
+POST http://localhost:11434/api/generate
+
+{
+  "model": "mistral",
+  "prompt": "Hello, explain AI roadmap for a student.",
+  "max_tokens": 512,
+  "stream": false
+}
+
+
+####
+POST http://localhost:8000/api/ai/ask
+Content-Type: application/json
+
+{
+  "question": "give road map of data science"
 }

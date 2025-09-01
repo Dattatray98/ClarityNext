@@ -1,24 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import ChatMessage from '../Components/ChatMessage';
+import type { Chat, Message } from '../Types/types';
 
-// Define TypeScript interfaces
-interface Message {
-  id: string;
-  text: string;
-  sender: 'user' | 'ai';
-  timestamp: Date;
-}
-
-interface Chat {
-  id: string;
-  title: string;
-  messages: Message[];
-  lastActive: Date;
-}
-
-interface ApiResponse {
-  response: string;
-}
+import { askBackendAI } from '../Hooks/AiRoutes.Fetch';
 
 const AIChatPage: React.FC = () => {
   // State for chats, current chat, and user input
@@ -37,12 +21,14 @@ const AIChatPage: React.FC = () => {
       lastActive: new Date(),
     },
   ]);
+
+  
   const [currentChatId, setCurrentChatId] = useState('1');
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Refs for auto-scrolling and focusing
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -50,38 +36,11 @@ const AIChatPage: React.FC = () => {
   // Get current chat
   const currentChat = chats.find(chat => chat.id === currentChatId) || chats[0];
 
-  // Function to call the backend API
-  const askBackendAI = async (prompt: string): Promise<string> => {
-    try {
-      const response = await axios.post<ApiResponse>(
-        'http://localhost:8000/api/ask',
-        { prompt },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          timeout: 30000, // 30 second timeout
-        }
-      );
-
-      if (!response.data.response) {
-        throw new Error('No response received from AI');
-      }
-
-      return response.data.response;
-    } catch (error) {
-      console.error('API Error:', error);
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || 'Failed to get response from AI');
-      }
-      throw new Error('An unexpected error occurred');
-    }
-  };
 
   // Function to handle sending a message
   const handleSendMessage = async () => {
     if (inputText.trim() === '') return;
-    
+
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -89,7 +48,7 @@ const AIChatPage: React.FC = () => {
       sender: 'user',
       timestamp: new Date(),
     };
-    
+
     // Update chats with new message
     const updatedChats = chats.map(chat => {
       if (chat.id === currentChatId) {
@@ -101,23 +60,23 @@ const AIChatPage: React.FC = () => {
       }
       return chat;
     });
-    
+
     setChats(updatedChats);
     setInputText('');
     setIsTyping(true);
     setError(null);
-    
+
     try {
       // Call the backend API
       const aiResponseText = await askBackendAI(inputText);
-      
+
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
         text: aiResponseText,
         sender: 'ai',
         timestamp: new Date(),
       };
-      
+
       const updatedChatsWithAI = updatedChats.map(chat => {
         if (chat.id === currentChatId) {
           return {
@@ -129,12 +88,12 @@ const AIChatPage: React.FC = () => {
         }
         return chat;
       });
-      
+
       setChats(updatedChatsWithAI);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to get AI response';
       setError(errorMessage);
-      
+
       // Add error message to chat
       const errorResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -142,7 +101,7 @@ const AIChatPage: React.FC = () => {
         sender: 'ai',
         timestamp: new Date(),
       };
-      
+
       const updatedChatsWithError = updatedChats.map(chat => {
         if (chat.id === currentChatId) {
           return {
@@ -152,7 +111,7 @@ const AIChatPage: React.FC = () => {
         }
         return chat;
       });
-      
+
       setChats(updatedChatsWithError);
     } finally {
       setIsTyping(false);
@@ -175,7 +134,7 @@ const AIChatPage: React.FC = () => {
       ],
       lastActive: new Date(),
     };
-    
+
     setChats([newChat, ...chats]);
     setCurrentChatId(newChatId);
     setInputText('');
@@ -194,15 +153,15 @@ const AIChatPage: React.FC = () => {
   // Function to delete a chat
   const handleDeleteChat = (chatId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     if (chats.length <= 1) {
       // Don't delete the last chat
       return;
     }
-    
+
     const updatedChats = chats.filter(chat => chat.id !== chatId);
     setChats(updatedChats);
-    
+
     // If we deleted the current chat, switch to the first one
     if (currentChatId === chatId) {
       setCurrentChatId(updatedChats[0].id);
@@ -230,7 +189,7 @@ const AIChatPage: React.FC = () => {
   // Auto-resize textarea
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
-    
+
     // Auto-resize
     e.target.style.height = 'auto';
     e.target.style.height = e.target.scrollHeight + 'px';
@@ -239,10 +198,9 @@ const AIChatPage: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      <div 
-        className={`bg-gray-900 text-white w-64 flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${
-          sidebarOpen ? 'ml-0' : '-ml-64'
-        } md:ml-0`}
+      <div
+        className={`bg-gray-900 text-white w-64 flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-0' : '-ml-64'
+          } md:ml-0`}
       >
         <div className="p-4">
           <button
@@ -255,7 +213,7 @@ const AIChatPage: React.FC = () => {
             New Chat
           </button>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto">
           <div className="px-3 py-2 text-xs text-gray-400 uppercase tracking-wider">Recent Chats</div>
           <div className="space-y-1 px-2">
@@ -263,9 +221,8 @@ const AIChatPage: React.FC = () => {
               <div
                 key={chat.id}
                 onClick={() => handleSelectChat(chat.id)}
-                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${
-                  currentChatId === chat.id ? 'bg-gray-700' : 'hover:bg-gray-800'
-                }`}
+                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${currentChatId === chat.id ? 'bg-gray-700' : 'hover:bg-gray-800'
+                  }`}
               >
                 <div className="truncate flex-1">
                   <div className="font-medium text-sm truncate">{chat.title}</div>
@@ -285,7 +242,7 @@ const AIChatPage: React.FC = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="p-4 border-t border-gray-800">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -300,7 +257,7 @@ const AIChatPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden ">
         {/* Header */}
         <header className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
           <button
@@ -326,37 +283,15 @@ const AIChatPage: React.FC = () => {
 
         {/* Messages Container */}
         <div className="flex-1 overflow-y-auto p-4 pb-20">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             {currentChat.messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex mb-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-xs md:max-w-md lg:max-w-lg rounded-lg p-4 ${
-                    message.sender === 'user'
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white text-gray-800 shadow'
-                  }`}
-                >
-                  <div className="text-sm whitespace-pre-wrap">{message.text}</div>
-                  <div
-                    className={`text-xs mt-1 ${
-                      message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
-                    }`}
-                  >
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </div>
-                </div>
-              </div>
+              <ChatMessage key={message.id} message={message} />
             ))}
-            
+
+
             {isTyping && (
               <div className="flex justify-start mb-4">
-                <div className="bg-white text-gray-800 shadow rounded-lg p-4">
+                <div className="text-gray-800 p-4">
                   <div className="flex space-x-2">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
@@ -365,14 +300,14 @@ const AIChatPage: React.FC = () => {
                 </div>
               </div>
             )}
-            
+
             <div ref={messagesEndRef} />
           </div>
         </div>
 
         {/* Input Area */}
-        <div className="bg-white border-t p-4">
-          <div className="max-w-3xl mx-auto">
+        <div className="bg-white p-4 ">
+          <div className="max-w-4xl mx-auto">
             <div className="flex items-end">
               <textarea
                 ref={inputRef}
@@ -380,7 +315,7 @@ const AIChatPage: React.FC = () => {
                 onChange={handleTextareaChange}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message here..."
-                className="flex-1 border rounded-lg py-2 px-4 mr-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="flex-1 border rounded-lg py-2 px-4 font-medium mr-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-300"
                 rows={1}
                 style={{ minHeight: '44px', maxHeight: '150px' }}
               />

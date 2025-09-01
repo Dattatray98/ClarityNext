@@ -4,7 +4,8 @@ import axios from 'axios';
 
 interface User {
   id: string;
-  name: string;
+  FirstName: string;
+  LastName: string;
   email: string;
   avatar?: string;
 }
@@ -58,7 +59,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       setUser({
         id: response.data.id,
-        name: response.data.name || `${response.data.firstName} ${response.data.lastName}`,
+        FirstName: `${response.data.FirstName}`,
+        LastName:`${response.data.LastName}`,
         email: response.data.email
       });
     } catch (err) {

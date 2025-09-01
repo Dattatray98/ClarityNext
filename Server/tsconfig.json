@@ -16,5 +16,5 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src"]
+  "include": ["src", "src/Types/userAuth.types.ts"]
 }
