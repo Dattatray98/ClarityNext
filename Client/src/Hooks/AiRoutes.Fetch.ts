@@ -5,10 +5,13 @@ import type { ApiResponse } from "../Types/types";
 export const askBackendAI = async (question: string): Promise<string> => {
   try {
     const response = await axios.post<ApiResponse>(
-      "http://localhost:8000/api/ai/ask",
-      { question },
+      "http://localhost:5000/api/ai/ask",
+      { question},
       {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         timeout: 120000, // Timeout in seconds
       }
     );

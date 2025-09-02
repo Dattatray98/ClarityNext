@@ -25,7 +25,7 @@ Content-Type: application/json
 POST http://localhost:11434/api/generate
 
 {
-  "model": "mistral",
+  "model": "llama3.1:8b",
   "prompt": "Hello, explain AI roadmap for a student.",
   "max_tokens": 512,
   "stream": false

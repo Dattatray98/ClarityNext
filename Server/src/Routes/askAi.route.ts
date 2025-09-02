@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { askMistral_AI } from "../Controllers/askAi.Controller";
+import { ask_AI } from "../Controllers/askAi.Controller";
 const router = Router();
 
-router.post("/ask", askMistral_AI);
+router.post("/ask", ask_AI);
 
 export default router;

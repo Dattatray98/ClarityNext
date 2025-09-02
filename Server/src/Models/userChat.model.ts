@@ -1,12 +1,32 @@
 import mongoose, { Schema, model, Document } from "mongoose";
-import { IChat } from "../Types/userChat.model";
+import {IContent, IConversation, IMesssage } from "../Types/userChat.model";
 
 
-const ChatSchema = new Schema<IChat>({
-    User_id : {type: mongoose.Schema.Types.ObjectId , ref:"User"},
+// Nested content schema inside message schema
+
+const ContentSchema = new Schema<IContent>({
     question: {type: String},
     answer: {type: String},
-    createdAt: {type: Date, default: Date.now},
-});
+})
 
-export default mongoose.model("Chat", ChatSchema);
+
+// Nested message schema inside converstaion schema
+
+const MessageSchema = new Schema<IMesssage>({
+    role: {type: String, enum:["user", "assistant"], required: true},
+    content: [ContentSchema],
+}, {timestamps: true});
+
+
+
+// Conversation schema 
+
+const ConversationSchema = new Schema<IConversation>({
+    user_Id: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
+    title: {type: String, required: true},
+    convo: [MessageSchema],
+}, {timestamps: true})
+
+
+
+export default mongoose.model("Conversation", ConversationSchema);

@@ -18,13 +18,13 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
   return (
     <div className={`flex mb-4 ${isUser ? "justify-end" : "justify-start"}`}>
       <div
-        className={`max-w-xs md:max-w-md space-y-2 lg:max-w-lg rounded-lg p-4 ${isUser
-            ? "font-medium text-gray-800 bg-gray-200"
-            : "text-gray-800 font-medium text-lg"
+        className={`max-w-xs md:max-w-md space-y2 mt-10 lg:max-w-lg rounded-lg p-2 ${isUser
+          ? "font-medium text-gray-800 bg-gray-200"
+          : "text-gray-800 font-medium text-lg"
           }`}
       >
         {isUser ? (
-          <div className="text-sm whitespace-pre-wrap">{message.text}</div>
+          <div className="text-lg whitespace-pre-wrap ">{message.text}</div>
         ) : (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -62,14 +62,16 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
         )}
 
         {/* Timestamp */}
-        <div
-          className={`text-xs mt-5 ${isUser ? "text-blue-200" : "text-gray-500"
-            }`}
-        >
-          {message.timestamp.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+        <div className="flex relative justify-end">
+          <div
+            className={`text-xs ${isUser ? "text-gray-600 text-lg bg-gray-100 p-1 rounded" : "text-gray-600 text-lg p-1 bg-gray-200 rounded absolute left-0"
+              }`}
+          >
+            {message.timestamp.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </div>
         </div>
       </div>
     </div>
