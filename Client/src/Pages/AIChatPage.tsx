@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ChatMessage from '../Components/ChatMessage';
 import type { Chat, Message } from '../Types/types';
 import {Sparkles } from "lucide-react";
-import { askBackendAI } from '../Hooks/AiRoutes.Fetch';
+import { askBackendAI } from '../Hooks/AiChatPage.hooks/AiRoutes.Fetch';
 import { MdDelete } from 'react-icons/md';
 import { HiChevronDoubleRight } from "react-icons/hi";
 

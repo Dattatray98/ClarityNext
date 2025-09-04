@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ApiResponse } from "../Types/types";
+import type { ApiResponse } from "../../Types/types";
 
 // Function to call the backend API
 export const askBackendAI = async (question: string): Promise<string> => {
@@ -37,3 +37,34 @@ export const askBackendAI = async (question: string): Promise<string> => {
     throw new Error("An unexpected error occurred");
   }
 };
+
+
+
+export const recentChat = async ()=>{
+  try {
+    const response = await axios.get("http://localhost:5000/api/ai/recentChats",
+      {
+        headers:{
+          Authorization : `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+
+    if(!response.data.success){
+      throw new Error(response.data.message)
+    }
+
+    if(!response.data.convo){
+      throw new Error("no responce recevied from backend ")
+    }
+
+
+    
+
+
+    
+  }catch(error){
+
+  }
+}
