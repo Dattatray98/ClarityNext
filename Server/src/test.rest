@@ -33,9 +33,10 @@ POST http://localhost:11434/api/generate
 
 
 ####
-POST http://localhost:8000/api/ai/ask
+POST http://localhost:5000/api/ai/ask
 Content-Type: application/json
 
 {
-  "question": "give road map of data science"
+  ""
+  "prompt": "give road map of data science"
 }

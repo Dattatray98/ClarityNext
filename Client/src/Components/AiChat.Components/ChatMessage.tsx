@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css"; // Pick your theme
 
-import type { Message } from "../Types/types"; // If you keep types in a separate file
+import type { Message } from "../../Types/types"; // If you keep types in a separate file
 // If you keep types in a separate file
 
 interface Props {

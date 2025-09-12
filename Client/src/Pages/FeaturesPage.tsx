@@ -5,6 +5,8 @@ import Sidebar from "../Components/Sidebar"
 import { BiHomeSmile } from "react-icons/bi"
 import { RiChatSmileAiLine } from "react-icons/ri"
 import { RxUpdate, RxFileText } from "react-icons/rx"
+import { Sparkles } from "lucide-react";
+
 
 const FeaturesPage = () => {
     const [activeTab, setActiveTab] = useState(0);
@@ -13,7 +15,8 @@ const FeaturesPage = () => {
         { label: "Home", icon: BiHomeSmile, content: <Home /> },
         { label: "Resume", icon: RxFileText, content: <Upload /> },
         { label: "AI Chat", icon: RiChatSmileAiLine, content: <AiChat /> },
-        { label: "Stay Updated", icon: RxUpdate, content: <StayUpdated />}
+        { label: "Stay Updated", icon: RxUpdate, content: <StayUpdated />},
+        { label: "AI Interview Avatar", icon:Sparkles }
     ];
 
     const handleTabClick = (index: number) => {

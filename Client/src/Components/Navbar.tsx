@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className='flex gap-1 cursor-pointer'>
         <FaGraduationCap className="text-[#013778] text-2xl md:text-3xl" />
         <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#013778] to-[#029097] bg-clip-text text-transparent">
-          ClarityNext
+          PlacementOS
         </h1>
       </div>
 

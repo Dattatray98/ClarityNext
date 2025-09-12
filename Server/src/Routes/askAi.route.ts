@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { ask_AI } from "../Controllers/askAi.Controller";
+import { Ask_Ai, GetChats } from "../Controllers/askAi.Controller";
 const router = Router();
 
-router.post("/ask", ask_AI);
+router.post("/ask", Ask_Ai);
+
+router.get("/getChats", GetChats);
 
 export default router;

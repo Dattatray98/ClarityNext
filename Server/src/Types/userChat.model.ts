@@ -1,24 +1,19 @@
-import mongoose, { Types, Document } from "mongoose";
-
-export interface IChat {
-    role: "user" | "assistant";
-    question: string;
-    answer: string;
-}
-
-export interface IContent {
-    question: string;
-    answer: string;
-}
+import mongoose, { Document } from "mongoose";
 
 export interface IMesssage {
-    role: "user" | "assistant";
-    content: IContent[];
+    conversationId: mongoose.Types.ObjectId;
+    prompt: string;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 
 export interface IConversation extends Document {
-    user_Id: mongoose.ObjectId;
+    user_Id: mongoose.Types.ObjectId;
     title: string;
-    convo: IMesssage[];
+    createdAt : Date;
+    updatedAt : Date;
 }
+
+

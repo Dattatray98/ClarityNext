@@ -2,12 +2,13 @@ import Footer from "../Components/Footer"
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "../Components/Navbar"
 import { RiChatSmileAiLine } from "react-icons/ri";
+import { Features } from "../Types/types";
 
 const HomePage = () => {
   // Consider making the username dynamic by fetching from user context/state
   // const { user } = useAuth(); // Example: if you have authentication context
   // const userName = user?.name || "User";
-  
+
 
   return (
     <div className="bg-gray-100 ">
@@ -40,47 +41,22 @@ const HomePage = () => {
       {/* Stats/Overview Cards Section */}
       <section className="px-3">
         <div className="flex flex-wrap justify-center gap-5 p-10">
-          {/* Changed justify-start to justify-center for better alignment */}
 
-          {/* Card 1: Upcoming Tasks */}
-          <div className="border bg-white h-[30vh] min-w-[300px] max-w-[56vh] p-5 rounded-2xl border-gray-200 hover:shadow-md shadow-sm group hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-            {/* Added cursor-pointer and min/max-width for responsiveness */}
-            <h1 className="font-medium text-lg flex items-center">
-              Upcoming Tasks & Deadlines
-              <IoIosArrowForward className="h-5 w-5 mt-1 text-gray-700 group-hover:scale-[0.90] font-bold group-hover:ml-1 transition-all duration-500" />
-            </h1>
-            {/* Add actual tasks data here later */}
-            <div className="mt-4 text-gray-600">
-              <p>• Assignment due: Physics - Nov 15</p>
-              <p>• Project submission: CS101 - Nov 20</p>
-            </div>
-          </div>
-
-          {/* Card 2: Recent Activity */}
-          <div className="border bg-white h-[30vh] min-w-[300px] max-w-[56vh] rounded-2xl border-gray-200 hover:shadow-md shadow-sm group p-5 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-            <h1 className="font-medium text-lg flex items-center">
-              Recent Activity / Performance
-              <IoIosArrowForward className="h-5 w-5 mt-1 text-gray-700 group-hover:scale-[0.90] font-bold group-hover:ml-1 transition-all duration-500" />
-            </h1>
-            {/* Add actual activity data here later */}
-            <div className="mt-4 text-gray-600">
-              <p>• A+ on Math Quiz</p>
-              <p>• Completed Python module</p>
-            </div>
-          </div>
-
-          {/* Card 3: AI Recommendations */}
-          <div className="border bg-white h-[30vh] min-w-[300px] max-w-[56vh] rounded-2xl border-gray-200 hover:shadow-md shadow-sm group p-5 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
-            <h1 className="font-medium text-lg flex items-center">
-              AI-Powered Recommendations
-              <IoIosArrowForward className="h-5 w-5 mt-1 text-gray-700 group-hover:scale-[0.90] font-bold group-hover:ml-1 transition-all duration-500" />
-            </h1>
-            {/* Add actual recommendations here later */}
-            <div className="mt-4 text-gray-600">
-              <p>• Explore Data Science path</p>
-              <p>• Try ML beginner course</p>
-            </div>
-          </div>
+          {Features.map((Features) => {
+            return (
+              <div className="border bg-blue-50 max-w-[40vh] p-5 rounded-2xl border-gray-200 hover:shadow-md shadow-sm group hover:scale-[1.02] transition-all duration-300 cursor-pointer flex-wrap hover:bg-blue-100">
+                <h1 className="font-medium text-xl flex items-center">
+                  {Features.lable}
+                  <IoIosArrowForward className="h-5 w-5 mt-1 text-gray-700 group-hover:scale-[0.96] font-bold group-hover:ml-1 transition-all duration-200" />
+                </h1>
+                {/* Add actual tasks data here later */}
+                <div className="mt-4 text-gray-600">
+                  <p>Last Mock Interview: Good clarity, needs more confidence.</p>
+                  <p>Attempts This Week: 2</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -101,7 +77,7 @@ const HomePage = () => {
         </div>
 
         <div className="border-y-2 border-gray-300 rounded-2xl max-h-[100vh] space-y-5 overflow-y-auto p-5 scrollbar-hidden">
-          {/* Consider extracting BlogCard as a separate component */}
+
 
           {/* Blog Card 1 */}
           <div className="border border-gray-200 bg-white rounded-xl flex flex-col md:flex-row shadow-sm hover:shadow-md group transition-shadow">
@@ -131,9 +107,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
-          {/* Repeat other blog cards similarly */}
-          {/* You might want to map through an array of blog posts instead of repeating code */}
 
         </div>
       </section>
