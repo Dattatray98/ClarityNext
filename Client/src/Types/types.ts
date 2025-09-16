@@ -3,6 +3,7 @@ import { RiChatSmileAiLine } from "react-icons/ri";
 import { TbInfoOctagon, TbListDetails } from 'react-icons/tb';
 import { HiOutlineHome } from "react-icons/hi2";
 import { Sparkles } from "lucide-react";
+import type { ReactNode } from 'react';
 
 
 
@@ -65,6 +66,8 @@ export interface Chat {
   messages: Message[];
   lastActive: Date;
   conversationId?: string;
+  updatedAt: any;
+  lastMessage: ReactNode;
 }
 
 export interface ApiResponse {
@@ -92,3 +95,4 @@ export interface IMesssage {
   createdAt: string;
   updatedAt: string;
 }
+

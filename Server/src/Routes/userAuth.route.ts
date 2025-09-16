@@ -6,11 +6,6 @@ const router = Router();
 
 router.post("/signup", UserSignUP);
 router.post("/login", UserLogin);
-router.get("/users/me", UserMe
-
-)
-router.get("/test", (req, res)=>{
-    res.send("hello signup/login server is running")
-})
+router.get("/users/me", UserMe)
 
 export default router

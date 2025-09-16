@@ -4,7 +4,7 @@ import cors from "cors";
 import authRoute from "./Routes/userAuth.route";
 import aiRoute from "./Routes/askAi.route";
 import { database } from "./config/mongo.config";
-
+import userInfoRoute from "./Routes/userInfo.route"
 dotenv.config();
 
 const app = express();
@@ -13,6 +13,7 @@ const PORT = process.env.PORT
 database();
 
 // Enable Cors
+
 
 app.use(cors({
   origin: process.env.FRONT_END, // your frontend URL
@@ -32,12 +33,18 @@ app.get("/home", (req:Request, res:Response)=>{
 })
 
 
+app.get("/api/profile", (req:Request, res:Response) => {
+  res.json("hellow");
+});
+
+
 // SignUP route 
 app.use("/api/auth", authRoute);
-
+app.use("/api/user", userInfoRoute);
 
 // Ai Routes 
 app.use("/api/ai", aiRoute)
+
 
 
 // Start server

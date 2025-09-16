@@ -9,7 +9,7 @@ export const askBackendAI = async (prompt: string, conversationId?: string): Pro
       "/api/ai/ask",
       {
         prompt,
-        conversation_Id: conversationId, // Send conversationId if available
+        conversation_Id: conversationId,
       },
       {
         headers: {
@@ -27,8 +27,7 @@ export const askBackendAI = async (prompt: string, conversationId?: string): Pro
     if (!response.data.answer) {
       throw new Error("No response received from AI");
     }
-
-    return response.data.answer;
+    return response.data;
 
   } catch (error: any) {
     console.error("API Error:", error);
@@ -38,7 +37,6 @@ export const askBackendAI = async (prompt: string, conversationId?: string): Pro
     throw new Error("An unexpected error occurred");
   }
 };
-
 
 
 export const GetChats = async () => {
@@ -55,15 +53,12 @@ export const GetChats = async () => {
       };
     }
 
-    const response = await api.get('/api/ai/getChats', { // Fixed: Removed double slash
+    const response = await api.get('/api/ai/getChats', {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
-
-    console.log("Full API response:", response);
-    console.log("Response data:", response.data);
 
     // Validate response structure
     if (!response.data) {
@@ -87,23 +82,32 @@ export const GetChats = async () => {
       };
     }
 
-    console.log("Conversations data:", response.data.data);
-    console.log("Count:", response.data.count);
+
+    console.log(response.data.data)
+
+    // Map data to include lastMessage safely
+    const chats = response.data.data.map((chat: { _id: any; title: any; lastMessage: any; updatedAt: any; }) => ({
+      id: chat._id,
+      title: chat.title,
+      lastMessage: chat.lastMessage || "No messages yet",
+      updatedAt: chat.updatedAt || null
+    }));
+
+
+
+    console.log("Chats with last messages:", chats);
 
     return {
       success: true,
-      data: response.data.data,
-      count: response.data.count,
+      data: chats,
+      count: chats.length,
       message: response.data.message || "Chats retrieved successfully"
     };
 
   } catch (error: any) {
     console.error("Error fetching chats:", error);
 
-    // Handle different error types
     if (error.response) {
-      // Server responded with error status
-      console.error("Server error response:", error.response.data);
       return {
         success: false,
         message: error.response.data?.message || `Server error: ${error.response.status}`,
@@ -112,8 +116,6 @@ export const GetChats = async () => {
         status: error.response.status
       };
     } else if (error.request) {
-      // Request was made but no response received
-      console.error("No response received:", error.request);
       return {
         success: false,
         message: "Network error. Please check your connection.",
@@ -121,8 +123,6 @@ export const GetChats = async () => {
         count: 0
       };
     } else {
-      // Something else happened
-      console.error("Unexpected error:", error.message);
       return {
         success: false,
         message: error.message || "An unexpected error occurred",
@@ -131,4 +131,4 @@ export const GetChats = async () => {
       };
     }
   }
-}
+};

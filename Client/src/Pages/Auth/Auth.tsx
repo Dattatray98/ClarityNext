@@ -37,7 +37,7 @@ const Auth = () => {
 
       {/* Optimized floating particles */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(isMobile ? 60 : 100)].map((_, i) => (
+        {[...Array(isMobile ? 60 : 150)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-green-800"
@@ -81,7 +81,7 @@ const Auth = () => {
               <div className='flex gap-1 cursor-pointer'>
                 <FaGraduationCap className="text-[#013778] text-2xl md:text-3xl" />
                 <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-[#013778] to-[#029097] bg-clip-text text-transparent">
-                  ClarityNext
+                  PlacementOS
                 </h1>
               </div>
 

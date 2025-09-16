@@ -17,7 +17,7 @@ const Home = () => {
                         Navigate Your Future with Clarity
                     </h1>
                     <p className="text-lg text-gray-600 mt-5 mb-8">
-                        ClarityNext helps students discover the right direction in education and career. Get clear guidance, resources, and a roadmap to move from confusion to confidence.
+                        PlacementOS helps students discover the right direction in education and career. Get clear guidance, resources, and a roadmap to move from confusion to confidence.
                     </p>
 
                     <div className="flex gap-8 justify-center">

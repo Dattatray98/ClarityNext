@@ -136,7 +136,9 @@ export const handleNewChat = (
             },
         ],
         lastActive: new Date(),
-        conversationId: undefined, // Ensure new chat has no conversationId
+        conversationId: undefined,
+        updatedAt: undefined,
+        lastMessage: undefined
     };
 
     setChats([newChat, ...chats]);

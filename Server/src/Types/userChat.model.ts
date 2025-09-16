@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 
-export interface IMesssage {
+export interface IMessage {
     conversationId: mongoose.Types.ObjectId;
     prompt: string;
     content: string;

@@ -20,12 +20,14 @@ const AIChatPage: React.FC = () => {
       messages: [
         {
           id: '1',
-          text: "Hello! I'm your AI assistant. How can I help you today?",
+          text: "Hello! I'm your AI Counselor. How can I help you today?",
           sender: 'ai',
           timestamp: new Date(),
         },
       ],
       lastActive: new Date(),
+      updatedAt: undefined,
+      lastMessage: undefined
     },
   ]);
 
@@ -112,7 +114,7 @@ const AIChatPage: React.FC = () => {
     <div className="flex h-screen bg-gray-50 p-3 bg-gradient-to-bl from-blue-100 to-gray-100">
       {/* Sidebar */}
       <AISidebar 
-        chats={chats} 
+        // chats={chats} 
         currentChatId={currentChatId} 
         onSelectChat={handleSelectChat}
         onDeleteChat={handleDeleteChat}

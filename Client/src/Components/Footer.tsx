@@ -13,12 +13,12 @@ const Footer = () => {
                             <div className='flex gap-1'>
                                 <FaGraduationCap className="text-[#013778] text-3xl" />
                                 <h1 className="text-2xl font-bold bg-gradient-to-r from-[#013778] to-[#029097] bg-clip-text text-transparent">
-                                    ClarityNext
+                                    PlacementOS
                                 </h1>
                             </div>
                         </div>
                         <p className="text-sm mb-4 leading-relaxed">
-                             ClarityNext helps students discover the right direction in education and career. Get clear guidance, resources, and a roadmap to move from confusion to confidence.
+                             PlacementOS helps students discover the right direction in education and career. Get clear guidance, resources, and a roadmap to move from confusion to confidence.
                         </p>
                         <div className="flex space-x-4">
                             {[
@@ -146,7 +146,7 @@ const Footer = () => {
                 {/* Copyright */}
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm">
                     <p className="text-gray-500">
-                        © {currentYear} ClarityNext. All rights reserved. |
+                        © {currentYear} PlacementOS. All rights reserved. |
                         <a href="/terms&conditions" className="hover:text-white ml-2">Terms of Service</a> |
                         <a href="/privacypolicy" className="hover:text-white ml-2">Privacy Policy</a>
                     </p>
