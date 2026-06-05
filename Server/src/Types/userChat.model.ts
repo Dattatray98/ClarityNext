@@ -10,6 +10,7 @@ export interface IMessage {
 
 
 export interface IConversation extends Document {
+    _id:mongoose.Types.ObjectId;
     user_Id: mongoose.Types.ObjectId;
     title: string;
     createdAt : Date;

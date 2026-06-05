@@ -44,3 +44,9 @@ Content-Type: application/json
 
 ####
 POST  http://localhost:5000/api/user/userinfo
+
+
+
+#### 
+GET http://localhost:8000/api/chats
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMjJiNjBjNGMyMDQ5OWNlNjYyZDlmZiIsImlhdCI6MTc4MDY2MjgyOCwiZXhwIjoxNzgwNjY2NDI4fQ.wuo-x7wsyuLi_U8YqFd7rxAWrZ3-Qum8aG6hkFSyc64

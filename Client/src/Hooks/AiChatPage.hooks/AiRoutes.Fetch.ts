@@ -53,56 +53,14 @@ export const GetChats = async () => {
       };
     }
 
-    const response = await api.get('/api/ai/getChats', {
+    const response = await api.get('/api/chats', {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    // Validate response structure
-    if (!response.data) {
-      console.error("No data in response");
-      return {
-        success: false,
-        message: "No data received from server",
-        data: [],
-        count: 0
-      };
-    }
-
-    // Check if the expected data structure exists
-    if (!response.data.success || !Array.isArray(response.data.data)) {
-      console.error("Invalid response structure:", response.data);
-      return {
-        success: false,
-        message: "Invalid response format from server",
-        data: [],
-        count: 0
-      };
-    }
-
-
-    console.log(response.data.data)
-
-    // Map data to include lastMessage safely
-    const chats = response.data.data.map((chat: { _id: any; title: any; lastMessage: any; updatedAt: any; }) => ({
-      id: chat._id,
-      title: chat.title,
-      lastMessage: chat.lastMessage || "No messages yet",
-      updatedAt: chat.updatedAt || null
-    }));
-
-
-
-    console.log("Chats with last messages:", chats);
-
-    return {
-      success: true,
-      data: chats,
-      count: chats.length,
-      message: response.data.message || "Chats retrieved successfully"
-    };
+    return response.data.convo;
 
   } catch (error: any) {
     console.error("Error fetching chats:", error);

@@ -27,7 +27,7 @@ const AISidebar = ({
     const fetchChat = async () => {
       try {
         const resChats = await GetChats();
-        setChats(resChats.data.data || []);
+        setChats(resChats || []);
         console.log("Chats from backend:", resChats.data);
       } catch (err: any) {
         setError(err.message || "Failed to fetch chats");
@@ -43,9 +43,8 @@ const AISidebar = ({
 
   return (
     <div
-      className={`bg-gray-100 shadow-md border-2 border-gray-200 rounded-xl text-white w-[35vh] flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${
-        sidebarOpen ? "ml-0" : "-ml-64"
-      } md:ml-0`}
+      className={`bg-gray-100 shadow-md border-2 border-gray-200 rounded-xl text-white w-[35vh] flex-shrink-0 flex flex-col transition-all duration-300 ease-in-out ${sidebarOpen ? "ml-0" : "-ml-64"
+        } md:ml-0`}
     >
       <div className="p-4">
         <button
@@ -85,11 +84,10 @@ const AISidebar = ({
                   onSelectChat(chat.id || chat.id);
                   console.log("Selected chat:", chat.id || chat.id);
                 }}
-                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${
-                  currentChatId === (chat.id || chat.id)
+                className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group ${currentChatId === (chat.id || chat.id)
                     ? "bg-blue-50 shadow-sm border border-gray-200"
                     : "border border-gray-200 bg-gray-200 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 <div className="truncate flex-1">
                   <div className="font-medium text-sm truncate text-gray-700">

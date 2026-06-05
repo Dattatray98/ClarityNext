@@ -46,6 +46,7 @@ export const UserLogin = async (req: Request, res: Response) => {
     return res.status(400).json({ message: "Email and password are required" });
   }
 
+  console.log(req.body);
   try {
     const user = await User.findOne({ email });
 
@@ -59,13 +60,19 @@ export const UserLogin = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: "Invalid Credentials" });
     }
 
-    res.status(200).json({
-      id: user._id.toString(), // ✅ type safe now
-      FirstName: user.FirstName,
-      LastName: user.LastName,
-      email: user.email,
-      token: GenerateToken(user._id.toString()),
-    });
+    try {
+      const generatedtoken = await GenerateToken(user._id.toString())
+      res.status(200).json({
+        id: user._id.toString(), // ✅ type safe now
+        FirstName: user.FirstName,
+        LastName: user.LastName,
+        email: user.email,
+        token: generatedtoken,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

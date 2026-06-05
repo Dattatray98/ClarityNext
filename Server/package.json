@@ -43,6 +43,7 @@
     "jsonwebtoken": "^9.0.2",
     "mime": "^4.0.7",
     "mongoose": "^8.18.0",
+    "ollama": "^0.6.3",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "streamifier": "^0.1.1"

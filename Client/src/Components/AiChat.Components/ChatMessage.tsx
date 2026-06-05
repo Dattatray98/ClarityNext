@@ -44,7 +44,7 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
               ),
               code: ({ node, inline, className, children, ...props }: any) => (
                 !inline ? (
-                  <pre className="bg-gray-700 text-gray-100  rounded-xl overflow-x-auto">
+                  <pre className="bg-gray-700 text-gray-100 py-1 px-2 rounded-xl overflow-x-auto">
                     <code className={className} {...props}>
                       {children}
                     </code>

@@ -28,7 +28,7 @@ const Navbar = () => {
               key={navlink.id}
             >
               <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
-              <a href={navlink.path} className="font-medium text-sm lg:text-lg cursor-pointer">
+              <a href={navlink.path} className=" text-md cursor-pointer">
                 {navlink.label}
               </a>
             </div>

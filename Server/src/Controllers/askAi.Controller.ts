@@ -4,9 +4,7 @@ import Conversation from "../Models/userConvo.model";
 import Message from "../Models/userMessage.model";
 import { VerifyToken } from "../utils/Token";
 
-/**
- * 🔹 Controller: Ask AI
- */
+
 export const Ask_Ai = async (req: Request, res: Response) => {
   const { prompt, conversation_Id } = req.body;
 
@@ -75,54 +73,5 @@ export const Ask_Ai = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("❌ Ask_Ai error:", error);
     res.status(500).json({ success: false, message: "Server error" });
-  }
-};
-
-/**
- * 🔹 Controller: Get Chats
- */
-
-export const GetChats = async (req: Request, res: Response) => {
-  try {
-    // 1️⃣ Verify token
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ success: false, message: "Token not provided" });
-    }
-
-    const decoded = VerifyToken(token);
-    if (!decoded || typeof decoded !== "object" || !decoded.id) {
-      return res.status(401).json({ success: false, message: "Invalid token" });
-    }
-
-    const user_Id = decoded.id;
-
-    // 2️⃣ Get the latest conversation for this user
-    const conversation = await Conversation.findOne({ user_Id }).sort({ updatedAt: -1 });
-    if (!conversation) {
-      return res.status(200).json({ success: true, data: null, message: "No conversation found" });
-    }
-
-    // 3️⃣ Get the latest message in that conversation
-    const lastMessage = await Message.findOne({ conversationId: conversation._id })
-      .sort({ createdAt: -1 });
-
-    // 4️⃣ Return single conversation + single message
-    return res.status(200).json({
-      success: true,
-      data: {
-        conversationId: conversation._id,
-        title: conversation.title,
-        lastMessage: lastMessage ? {
-          prompt: lastMessage.prompt,
-          content: lastMessage.content,
-          createdAt: lastMessage.createdAt,
-        } : null,
-      },
-      message: "Latest chat retrieved successfully",
-    });
-  } catch (error: any) {
-    console.error("❌ GetLatestChat error:", error);
-    return res.status(500).json({ success: false, message: "Server error" });
   }
 };

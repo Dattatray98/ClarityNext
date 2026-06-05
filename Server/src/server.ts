@@ -4,11 +4,12 @@ import cors from "cors";
 import authRoute from "./Routes/userAuth.route";
 import aiRoute from "./Routes/askAi.route";
 import { database } from "./config/mongo.config";
-import userInfoRoute from "./Routes/userInfo.route"
+import userInfoRoute from "./Routes/userInfo.route";
+import chatsRoute from "./Routes/userChats";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8000
 
 database();
 
@@ -45,7 +46,8 @@ app.use("/api/user", userInfoRoute);
 // Ai Routes 
 app.use("/api/ai", aiRoute)
 
-
+//chats 
+app.use("/api", chatsRoute);
 
 // Start server
 app.listen(PORT, () => {

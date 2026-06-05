@@ -20,7 +20,7 @@ const AIChatPage: React.FC = () => {
       messages: [
         {
           id: '1',
-          text: "Hello! I'm your AI Counselor. How can I help you today?",
+          text: "start your convo",
           sender: 'ai',
           timestamp: new Date(),
         },
@@ -123,7 +123,7 @@ const AIChatPage: React.FC = () => {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden border-2 border-gray-200 ml-1 rounded-xl">
+      <div className="flex-1 flex flex-col overflow-hidden border-2 border-red-200 ml-1 rounded-xl">
         {/* Header */}
         <header className="bg-gray-50 border-b border-gray-200 p-4 flex items-center justify-between">
           <button
